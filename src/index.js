@@ -1,12 +1,15 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
+import React from "react"
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+// 1. import `ChakraProvider` component
+import { ChakraProvider } from "@chakra-ui/react"
+
+function App({ Component }) {
+ // 2. Use at the root of your app
+ return (
+   <ChakraProvider>
+     <Component />
+   </ChakraProvider>
+ )
+}
 
 
