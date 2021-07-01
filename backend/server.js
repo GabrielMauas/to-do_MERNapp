@@ -10,7 +10,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/todoapp', {
     useUnifiedTopology: true
 });
 
-const PORT = 4000;
+const PORT = process.env.PORT || 4000;
 const app = express();
 
 app.use(cors());
