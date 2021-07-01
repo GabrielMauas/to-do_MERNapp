@@ -1,18 +1,35 @@
 import React, { useState, useEffect } from 'react'
 import ItemForm from './ItemForm';
+import { useRouteMatch } from 'react-router-dom';
+import axios from 'axios';
+import Swal from 'sweetalert2';
 
-export default function AddItem() {
 
+export default function EditItem() {
+
+    const match = useRouteMatch();
+    const id = match.params.id;
     const [item, setItem] = useState();
+    const url = 'http://localhost:4000/';
+
 
     useEffect(() => {
-        setItem({
-            name: 'mark'
-        })
+        axios.get(url + id)
+            .then(res => {
+                setItem(res.data);
+            })
     }, []);
 
     const onSubmit = data => {
-        alert(JSON.stringify(data));
+        axios.post(url + id, data)
+            .then(Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Item Updated!',
+                showConfirmButton: false,
+                timer: 1000
+            }))
+            .catch(err => console.log(err));
     };
 
     return item ? (
@@ -21,6 +38,10 @@ export default function AddItem() {
             <ItemForm item={item} onSubmit={onSubmit} type='edit' /> 
         </div>
         ) : (
-            <div>Loading...</div>
+            <div className="d-flex justify-content-center mt-5">
+                <div className="spinner-border" role="status">
+                    <span className="visually-hidden"></span>
+                </div>
+            </div>
         );
 }

@@ -1,11 +1,27 @@
-import React from 'react'
+import React from 'react';
+import axios from 'axios';
+import Swal from 'sweetalert2';
 
 import ItemForm from './ItemForm';
 
 export default function AddItem() {
 
     const onSubmit = (data) => {
-        alert(JSON.stringify(data));
+        // console.log(data);
+        const item = {
+            name: data.name,
+            priority: data.priority
+        }
+        // console.log(item);
+        axios.post('http://localhost:4000/add-item', item)
+            .then(Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Item added!',
+                showConfirmButton: false,
+                timer: 1000
+            }))
+            .catch(err => console.log(err));
     };
 
     return (
