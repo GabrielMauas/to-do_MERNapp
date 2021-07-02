@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 export default function TodoList() {
 
     const [items, setItems] = useState([]);
-    const url = 'http://localhost:4000/';
+    const url = 'https://gm-todoapp.herokuapp.com/';
     
     useEffect(() => {
         axios.get(url)

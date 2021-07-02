@@ -10,7 +10,7 @@ export default function EditItem() {
     const match = useRouteMatch();
     const id = match.params.id;
     const [item, setItem] = useState();
-    const url = 'http://localhost:4000/';
+    const url = 'https://gm-todoapp.herokuapp.com/';
 
 
     useEffect(() => {

@@ -6,6 +6,8 @@ import ItemForm from './ItemForm';
 
 export default function AddItem() {
 
+    const url = 'https://gm-todoapp.herokuapp.com/';
+
     const onSubmit = (data) => {
         // console.log(data);
         const item = {
@@ -13,7 +15,7 @@ export default function AddItem() {
             priority: data.priority
         }
         // console.log(item);
-        axios.post('http://localhost:4000/add-item', item)
+        axios.post(url, item)
             .then(Swal.fire({
                 position: 'center',
                 icon: 'success',
