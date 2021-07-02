@@ -18,7 +18,7 @@ export default function EditItem() {
             .then(res => {
                 setItem(res.data);
             })
-    }, []);
+    }, [id]);
 
     const onSubmit = data => {
         axios.post(url + id, data)
