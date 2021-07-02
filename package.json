@@ -23,8 +23,8 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "start2": "node src/index.js",
-    "start": "react-scripts start",
+    "start": "node src/index.js",
+    "start2": "react-scripts start",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
