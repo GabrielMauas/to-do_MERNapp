@@ -23,7 +23,7 @@ export default function ItemForm({ item, onSubmit, type }) {
             <form onSubmit={submitHandler}>
                 <div className="mb-3">
                     <label className="form-label h5" htmlFor="name">Name</label>
-                    <input {...register('name')} type="text" className="form-control" ></input>
+                    <input {...register('name')} type="text" className="form-control" autoComplete="off" spellCheck="off" autoCapitalize="sentences"></input>
                 </div>
                 <div className="mb-3">
                     <label className="form-label h5" htmlFor="priority">Priority</label>

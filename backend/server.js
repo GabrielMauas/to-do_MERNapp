@@ -7,7 +7,8 @@ const Item = require('./models/Item');
 // MongoDB Connection
 mongoose.connect('mongodb://127.0.0.1:27017/todoapp', {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useFindAndModify: false
 });
 
 const PORT = process.env.PORT || 4000;
