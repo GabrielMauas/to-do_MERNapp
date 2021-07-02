@@ -1,7 +1,7 @@
 // Imports
 const express = require('express');
 const cors = require('cors');
-const bodyParser = require('bodyParser');
+const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const Item = require('./models/Item');
 

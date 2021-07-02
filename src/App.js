@@ -19,7 +19,7 @@ const App = () => {
               <li className="nav-item mr-3">
                 <Link className="nav-link btn btn-outline-light pt-3 px-3" aria-current="page" to="/"><box-icon name='list-ul' color='#fff'></box-icon></Link>
               </li>
-              <li className="nav-item mr-4">
+              <li className="nav-item mr-2">
                 <Link className="nav-link btn btn-outline-light pt-3 px-3" to="/add-item"><box-icon name='plus-square' type='solid' color='#ffffff'></box-icon></Link>
               </li>
             </ul>
