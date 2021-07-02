@@ -28,7 +28,7 @@ export default function ItemForm({ item, onSubmit, type }) {
                 <div className="mb-3">
                     <label className="form-label h5" htmlFor="priority">Priority</label>
                     <select {...register('priority')} className="form-select mb-3 form-control">
-                        <option selected disabled>- Select -</option>
+                        <option disabled>- Select -</option>
                         <option className='text-success' value="Low">Low</option>
                         <option className='text-warning' value="Medium">Medium</option>
                         <option className='text-danger' value="High">High</option>
