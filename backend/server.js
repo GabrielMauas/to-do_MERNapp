@@ -1,21 +1,24 @@
 // Imports
 const express = require('express');
 const cors = require('cors');
+const bodyParser = require('bodyParser');
 const mongoose = require('mongoose');
 const Item = require('./models/Item');
 
 // MongoDB Connection
-mongoose.connect('mongodb://127.0.0.1:27017/todoapp', {
+const connection = 'mongodb+srv://gmauas:qwertyuiop1234567@cluster0.v39mf.mongodb.net/todoapp1?retryWrites=true&w=majority';
+mongoose.connect(connection, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false
-});
+}).then(() => console.log('Database connected succesfully.')).catch(err => console.log(err));
+
 
 const PORT = process.env.PORT || 4000;
 const app = express();
 
+app.use(bodyParser.json());
 app.use(cors());
-app.use(express.json());
 
 // == ROUTES ==
 // Get all items
