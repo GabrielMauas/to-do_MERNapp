@@ -45,9 +45,9 @@ export default function TodoList() {
             <table className="table table-hover">
                 <thead>
                     <tr className=''>
-                        <th colspan="1" scope="col">Item</th>
-                        <th colspan="1" scope="col" className='text-center'>Priority</th>
-                        <th colspan="1" scope="col" className='text-center'>Actions</th>
+                        <th colSpan="1" scope="col">Item</th>
+                        <th colSpan="1" scope="col" className='text-center'>Priority</th>
+                        <th colSpan="1" scope="col" className='text-center'>Actions</th>
                     </tr>
                 </thead>               
                 <tbody>
