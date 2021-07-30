@@ -40,6 +40,16 @@ export default function TodoList() {
     }
 
 
+    if(!items.length) {
+        return(
+        <div className="d-flex justify-content-center mt-5">
+            <div className="spinner-border" role="status">
+                <span className="visually-hidden"></span>
+            </div>
+        </div>
+        )
+    }
+
     return (
         <div className='container mt-4'>
             <table className="table table-hover">

@@ -6,7 +6,7 @@ import ItemForm from './ItemForm';
 
 export default function AddItem() {
 
-    const url = 'https://gm-todoapp.herokuapp.com/';
+    const url = 'https://gm-todoapp.herokuapp.com/add-item/';
 
     const onSubmit = (data) => {
         // console.log(data);
