@@ -1,12 +1,14 @@
 import React from 'react';
 import axios from 'axios';
-import Swal from 'sweetalert2';
-
+import { Modal, ModalOverlay, ModalCloseButton, ModalHeader, ModalBody, ModalContent, useToast } from '@chakra-ui/react';
+ 
 import ItemForm from './ItemForm';
 
-export default function AddItem() {
+export default function AddItem({ isOpen, onClose }) {
 
     const url = 'https://gm-todoapp.herokuapp.com/add-item/';
+
+    const toast = useToast();
 
     const onSubmit = (data) => {
         // console.log(data);
@@ -16,20 +18,26 @@ export default function AddItem() {
         }
         // console.log(item);
         axios.post(url, item)
-            .then(Swal.fire({
-                position: 'center',
-                icon: 'success',
-                title: 'Item added!',
-                showConfirmButton: false,
-                timer: 1000
+            .then(toast({
+                title: 'Item Added',
+                duration: '2000',
+                isClosable: true,
+                status: 'success'
             }))
             .catch(err => console.log(err));
     };
 
+
     return (
-        <div className='container mt-4 d-grid col-8 mx-auto'>
-            <h2 className='h2 mb-4 mt-5'>Add New Item</h2>
-            <ItemForm onSubmit={onSubmit} />
-        </div>
+        <Modal isOpen={isOpen} onClose={onClose} motionPreset="slideInBottom" size="sm" >
+            <ModalOverlay />
+            <ModalContent>
+                <ModalHeader>Add Item</ModalHeader>
+                <ModalCloseButton />
+                <ModalBody>
+                    <ItemForm onSubmit={onSubmit} onClose={onClose} />
+                </ModalBody>
+            </ModalContent>
+        </Modal>
     )
 }

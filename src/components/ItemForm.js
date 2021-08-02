@@ -1,45 +1,41 @@
 import React from 'react'
 import { useForm } from 'react-hook-form';
-import { useHistory } from 'react-router-dom';
+import { FormControl, FormLabel, Input, Select, Button } from '@chakra-ui/react';
+import { AddIcon } from '@chakra-ui/icons';
 
-export default function ItemForm({ item, onSubmit, type }) {
+export default function ItemForm({ item, onSubmit, onClose}) {
 
-    const { register, handleSubmit } = useForm({
-        defaultValues: 
-            {
-                name: item ? item.name : "",
-                priority: item ? item.priority : ""
-            },
-    });
+    // const { register, handleSubmit } = useForm({
+    //     defaultValues: 
+    //         {
+    //             name: item ? item.name : "",
+    //             priority: item ? item.priority : ""
+    //         },
+    // });
 
-    const history = useHistory();
+    const { register, handleSubmit } = useForm();
 
     const submitHandler = handleSubmit((data) => {
         onSubmit(data);
-        history.push('/');
     });
 
     return (
-            <form onSubmit={submitHandler}>
-                <div className="mb-3">
-                    <label className="form-label h5" htmlFor="name">Name</label>
-                    <input {...register('name')} type="text" className="form-control" autoComplete="off" spellCheck="false" autoCapitalize="sentences"></input>
-                </div>
-                <div className="mb-3">
-                    <label className="form-label h5" htmlFor="priority">Priority</label>
-                    <select {...register('priority')} className="form-select mb-3 form-control">
-                        <option disabled>- Select -</option>
-                        <option className='text-success' value="Low">Low</option>
-                        <option className='text-warning' value="Medium">Medium</option>
-                        <option className='text-danger' value="High">High</option>
-                    </select>
-                </div>
-           
-                <div className='d-grid gap-2 col-8 mx-auto mt-5'>
-                    <button type="submit" className="btn btn-block btn-lg btn-info">
-                        { type === 'edit' ? 'Edit' : 'Add'}
-                    </button>
-                </div>
+        <div>
+            <form onSubmit={submitHandler} >
+                <FormControl>
+                    <FormLabel>Item Name</FormLabel>
+                    <Input {...register('name')} type="text" placeholder="New item..." autoComplete="off" spellCheck="false" autoCapitalize="sentences" ></Input>
+                </FormControl>
+                <FormControl my="4">
+                    <FormLabel>Priority</FormLabel>
+                    <Select {...register('priority')} placeholder="-- Select --">
+                        <option value="Low">Low</option>
+                        <option value="Medium">Medium</option>
+                        <option value="High">High</option>
+                    </Select>
+                </FormControl>
+                <Button type="submit" onClick={onClose} size="lg" rightIcon={ <AddIcon /> } colorScheme="teal" my="4" mx="0">Done</Button>
             </form>
+        </div>
     )
 }

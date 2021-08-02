@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import ItemForm from './ItemForm';
-import { useRouteMatch } from 'react-router-dom';
+// import { useRouteMatch } from 'react-router-dom';
 import axios from 'axios';
-import Swal from 'sweetalert2';
+import { Modal, ModalOverlay, ModalCloseButton, ModalHeader, ModalBody, ModalContent, useToast } from '@chakra-ui/react';
 
 
-export default function EditItem() {
+export default function EditItem({ isOpen, onClose, id }) {
 
-    const match = useRouteMatch();
-    const id = match.params.id;
+    // const match = useRouteMatch();
+    // const id = match.params.id;
     const [item, setItem] = useState();
     const url = 'https://gm-todoapp.herokuapp.com/';
 
+    const toast = useToast();
 
     useEffect(() => {
         axios.get(url + id)
@@ -21,27 +22,26 @@ export default function EditItem() {
     }, [id]);
 
     const onSubmit = data => {
+        console.log(id);
         axios.post(url + id, data)
-            .then(Swal.fire({
-                position: 'center',
-                icon: 'success',
-                title: 'Item Updated!',
-                showConfirmButton: false,
-                timer: 1000
+            .then(toast({
+                title:'Item Updated',
+                duration: '2000',
+                status: 'success'
             }))
             .catch(err => console.log(err));
     };
 
-    return item ? (
-        <div className='container mt-4 d-grid col-8 mx-auto'>
-            <h2 className='h2 mb-4 mt-5'>Edit Item</h2>
-            <ItemForm item={item} onSubmit={onSubmit} type='edit' /> 
-        </div>
-        ) : (
-            <div className="d-flex justify-content-center mt-5">
-                <div className="spinner-border" role="status">
-                    <span className="visually-hidden"></span>
-                </div>
-            </div>
-        );
+    return (
+        <Modal isOpen={isOpen} onClose={onClose} motionPreset="slideInBottom" size="sm" >
+            <ModalOverlay />
+            <ModalContent>
+                <ModalHeader>Edit Item</ModalHeader>
+                <ModalCloseButton />
+                <ModalBody>
+                    <ItemForm item={item} onSubmit={onSubmit} onClose={onClose} />
+                </ModalBody>
+            </ModalContent>
+        </Modal>
+    )
 }

@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
-import Swal from 'sweetalert2';
+import { Container, Table, Thead, Tr, Tbody, Td, Th, Stack, Skeleton, ButtonGroup, IconButton, useToast } from '@chakra-ui/react';
+import { DeleteIcon } from '@chakra-ui/icons';
+
+// import EditItem from './EditItem';
 
 export default function TodoList() {
 
     const [items, setItems] = useState([]);
     const url = 'https://gm-todoapp.herokuapp.com/';
+
+    const toast = useToast();
     
     useEffect(() => {
         axios.get(url)
@@ -19,66 +23,73 @@ export default function TodoList() {
 
     const removeItem = id => {
         axios.delete(url + id)
-            .then(Swal.fire({
-                position: 'center',
-                icon: 'success',
+            .then(toast({
                 title: 'Item Removed!',
-                showConfirmButton: false,
-                timer: 1000
+                duration: '2000',
+                isClosable: true,
+                status: 'error'
             }))
             .catch(err => console.log(err));
     }
 
     const priorityColor = (pr) => {
         if(pr === 'Low') {
-            return 'align-middle text-success text-center';
+            return 'green.300';
         } else if(pr === 'Medium') {
-            return 'align-middle text-warning text-center';
+            return 'yellow.400';
         } else {
-            return 'align-middle text-danger text-center';
+            return 'red.400';
         }
     }
 
+    // const { isOpen, onOpen, onClose } = useDisclosure();
 
     if(!items.length) {
+
         return(
-        <div className="d-flex justify-content-center mt-5">
-            <div className="spinner-border" role="status">
-                <span className="visually-hidden"></span>
-            </div>
-        </div>
+            <Stack w="100%" p="10" mt="20">
+                <Skeleton height="30px" />
+                <Skeleton height="30px" />
+                <Skeleton height="30px" />
+            </Stack>
         )
     }
 
     return (
-        <div className='container mt-4'>
-            <table className="table table-hover">
-                <thead>
-                    <tr className=''>
-                        <th colSpan="1" scope="col">Item</th>
-                        <th colSpan="1" scope="col" className='text-center'>Priority</th>
-                        <th colSpan="1" scope="col" className='text-center'>Actions</th>
-                    </tr>
-                </thead>               
-                <tbody>
+
+        <Container maxW="container.xl" mt="24">
+            <Table variant="simple">
+                <Thead fontSize="2xl"> 
+                    <Tr>
+                        <Th>Item</Th>
+                        <Th>Priority</Th>
+                        <Th isNumeric>Actions</Th>
+                    </Tr>
+                </Thead>
+                <Tbody>
                     {
-                        items.map(item => (
-                            <tr key={item.id}>
-                                <td className='align-middle'>
-                                    {item.name}
-                                </td>
-                                <td className={priorityColor(item.priority)}>
-                                    {item.priority}
-                                </td>
-                                <td className='d-flex justify-content-end'>
-                                    <Link className='btn btn-outline-light mr-4' to={`/edit-item/${item._id}`}><box-icon type='solid' name='edit'></box-icon></Link>
-                                    <button onClick={ () => removeItem(item._id)} className='btn btn-outline-light'><box-icon type='solid' name='x-square'></box-icon></button>
-                                </td>
-                            </tr>
-                        ))
-                    }
-                </tbody>
-            </table>
-        </div>
+                        items.map( item => {
+                            return(
+                                <Tr key={item._id} >
+                                    <Td>{item.name}</Td>
+                                    <Td color={ priorityColor(item.priority) }>{item.priority}</Td>
+                                    <Td>
+                                        <ButtonGroup display="flex" alignItems="center" justifyContent="flex-end" spacing={5} >
+                                            {/* <IconButton icon={ <EditIcon /> } colorScheme="gray" size="sm" onClick={onOpen} /> */}
+                                            <IconButton icon={ <DeleteIcon /> } colorScheme="red" mx="" size="sm" onClick={ () => removeItem(item._id) } />
+                                        </ButtonGroup>
+                                    </Td>
+                                    {/* <Td display="none">
+                                        <EditItem isOpen={isOpen} onClose={onClose} />
+                                    </Td> */}
+                                </Tr>
+                            )                                
+                        })
+                    }                        
+                </Tbody>
+            </Table>
+        
+        </Container>
+
     )
 }

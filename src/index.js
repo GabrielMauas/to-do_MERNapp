@@ -1,15 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter } from 'react-router-dom';
+import { ChakraProvider, ColorModeScript } from '@chakra-ui/react';
 
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
+
+    <ColorModeScript />
+    <ChakraProvider>
       <App />
-    </BrowserRouter>
+    </ChakraProvider>
+
   </React.StrictMode>,
   document.getElementById('root')
 );

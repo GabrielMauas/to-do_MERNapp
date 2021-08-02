@@ -1,35 +1,35 @@
 import React from 'react';
-import { Route, Switch, Link } from 'react-router-dom';
-import 'boxicons';
+import { Heading, HStack, IconButton, Box, Text, useColorMode, useDisclosure, Link, Stack } from '@chakra-ui/react';
+import { AddIcon, MoonIcon, SunIcon, ExternalLinkIcon, LinkIcon } from '@chakra-ui/icons';
 
 // Import the Components
 import TodoList from './components/TodoList';
-import EditItem from './components/EditItem';
 import AddItem from './components/AddItem';
 
 
 const App = () => {
   
+  const { colorMode, toggleColorMode } = useColorMode();
+  const { isOpen, onOpen, onClose } = useDisclosure()
+
+
   return(
     <div>
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div className="container-fluid d-flex">
-          <Link className="navbar-brand h1" to="/">To-Do App</Link>
-          <ul className="navbar-nav d-flex flex-row">
-              <li className="nav-item mr-3">
-                <Link className="nav-link btn btn-outline-light pt-3 px-3" aria-current="page" to="/"><box-icon name='list-ul' color='#fff'></box-icon></Link>
-              </li>
-              <li className="nav-item mr-2">
-                <Link className="nav-link btn btn-outline-light pt-3 px-3" to="/add-item"><box-icon name='plus-square' type='solid' color='#ffffff'></box-icon></Link>
-              </li>
-            </ul>
-        </div>
-      </nav>
-      <Switch>
-        <Route exact path="/" component={TodoList}/>
-        <Route path="/edit-item/:id" component={EditItem}/>
-        <Route path="/add-item" component={AddItem}/>
-      </Switch>
+      <HStack position="fixed" top="0" height="80px" mb="20" bgColor="gray.700" color="white" w="100%" p="5" display="flex" justifyContent={["space-between"]} boxShadow="lg" >
+        <Heading>To-Do App</Heading>
+        <Box>
+          <IconButton bgColor="gray.600" mx="5" icon={<AddIcon /> } onClick={onOpen} />
+          <IconButton bgColor="gray.600"  icon={ colorMode === "light" ? <SunIcon /> : <MoonIcon /> } onClick={ toggleColorMode } />
+        </Box>
+      </HStack>
+      <TodoList />
+      <AddItem isOpen={isOpen} onClose={onClose} />
+      <HStack position="fixed" bottom="0" height={["", "20px"]} bgColor="gray.700" color="white" w="100%" p="5" dispaly="flex" justifyContent="space-between">
+        <Text>Made by <Link href="https://linktr.ee/gabrielmauas" isExternal>Gabriel Mauas <ExternalLinkIcon /></Link></Text>
+        <Stack spacing={3} direction="row">
+          <Link href="https://github.com/GabrielMauas/to-do_MERNapp" isExternal>Code <LinkIcon /></Link>
+        </Stack>
+      </HStack>
     </div>
   )
 }
